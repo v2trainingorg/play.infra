@@ -1,0 +1,36 @@
+name: Deploy AKS Cluster 
+
+on: 
+    push: 
+        branches: 
+          - main 
+jobs: 
+  deploy: 
+    runs-on: ubuntu-latest 
+        
+    steps: 
+      - name: Checkout code 
+        uses: actions/checkout@v2 
+             
+      - name: Set up Terraform 
+        uses: hashicorp/setup-terraform@v2 
+            
+      - name: Set up Azure CLI 
+        uses: azure/setup-azcli@v2 
+              
+      - name: Terraform Init 
+        run: terraform init 
+              
+      - name: Terraform Plan 
+        run: terraform plan -out=plan.out 
+              
+      - name: Terraform Apply 
+        run: terraform apply -input=false plan.out 
+        env: 
+          TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
+          TF_VAR_resource_group_name: myResourceGroup 
+          TF_VAR_location: eastus 
+          TF_VAR_cluster_name: v2train
+          TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
+          TF_VAR.service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
+          TF_VAR.admin_username: github
