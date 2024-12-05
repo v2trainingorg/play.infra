@@ -15,15 +15,15 @@ jobs:
       - name: Set up Terraform 
         uses: hashicorp/setup-terraform@v2 
             
-      - name: Set up Azure CLI 
-        uses: azure/cli@v2 
-
-      - name: Login to Azure
-        run: |
-          az login --service-principal \
-          -u ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} \
-          -p ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} \
-          --tenant ${{ secrets.TENANT_ID }}
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+            # ClientId of the Azure Service principal created.
+            client-id: ${{secrets.SERVICE_PRINCIPAL_CLIENT_ID}}
+            # TenantId of the Azure Service principal created.
+            tenant-id: ${{secrets.TENANT_ID}}
+            # Azure subscriptionId
+            subscription-id: ${{secrets.SUBSCRIPTION_ID}}
     
       - name: Terraform Init 
         run: terraform init 
