@@ -16,7 +16,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2 
             
       - name: Set up Azure CLI 
-        uses: azure/setup-azcli@v2 
+        uses: azure/cli@v2 
 
       - name: Login to Azure
         run: |
