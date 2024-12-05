@@ -35,6 +35,15 @@ variable "node_count" {
 }
 
 
+terraform { 
+  required_providers { 
+    azurerm = { 
+      source = "hashicorp/azurerm" 
+      version = "~> 3.0" 
+    } 
+  } 
+}
+
 provider "azurerm" {
   features {}
 }
@@ -64,28 +73,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   identity {
     type = "SystemAssigned"
-  }
-
-  
-  addon_profile { 
-    kube_dashboard { 
-        enabled = true 
-        } 
-    } 
-
-   linux_profile { 
-    admin_username = "azureuser" 
-    ssh_key { 
-      key_data = file("~/.ssh/id_rsa.pub")
-    } 
-   }
-  
-   network_profile { 
-     network_plugin = "azure" 
-     load_balancer_sku = "standard" 
-     outbound_type = "loadBalancer" 
-   } 
-
+  }    
 
   azure_policy_enabled = true
   enable_oidc_issuer = true
