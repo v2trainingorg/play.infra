@@ -71,6 +71,11 @@ jobs:
 
   check-create-cosmosdb:
     runs-on: ubuntu-latest
+    needs: deploy-infrastructure
+
+    permissions: 
+      id-token: write 
+      contents: read
 
     steps:
     - name: Checkout code
