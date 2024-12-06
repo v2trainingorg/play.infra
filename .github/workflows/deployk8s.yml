@@ -30,6 +30,9 @@ jobs:
             # Azure subscriptionId
             subscription-id: ${{secrets.SUBSCRIPTION_ID}}
     
+      - name: Set TF_LOG environment variable
+        run: echo "TF_LOG=DEBUG >> $GITHUB_ENV"
+
       - name: Terraform Init 
         run: |
             cd TF
@@ -58,4 +61,4 @@ jobs:
           TF_VAR_key_vault_name: v2train
           TF_VAR_servicebus_namespace_name: v2train
           TF_VAR_cosmosdb_account_name: v2train
-          TF_VAR.admin_username: github
+          TF_VAR.admin_username: github         
