@@ -68,38 +68,5 @@ jobs:
           TF_VAR_servicebus_namespace_name: v2train
           TF_VAR_cosmosdb_account_name: v2train
           TF_VAR.admin_username: github         
-
-  check-create-cosmosdb:
-    runs-on: ubuntu-latest
-    needs: deploy-infrastructure
-
-    permissions: 
-      id-token: write 
-      contents: read
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Azure Login
-      uses: Azure/login@v1
-      with:
-          # ClientId of the Azure Service principal created.
-          client-id: ${{secrets.SERVICE_PRINCIPAL_CLIENT_ID}}
-          # TenantId of the Azure Service principal created.
-          tenant-id: ${{secrets.TENANT_ID}}
-          # Azure subscriptionId
-          subscription-id: ${{secrets.SUBSCRIPTION_ID}} 
-
-    - name: Check if Cosmos DB exists
-      id: check_cosmosdb
-      run: |
-        cosmosdb_check=$(az cosmosdb show --name "v2train" --resource-group "v2train" --output json || echo "NotFound")
-        echo "::set-output name=exists::${cosmosdb_check}"
-      
-    - name: Create Cosmos DB if not exists
-      if: steps.check_cosmosdb.outputs.exists == 'NotFound'
-      run: |
-        az cosmosdb create --name "v2train" --resource-group "v2train" --kind MongoDB --enable-free-tier
  
 
