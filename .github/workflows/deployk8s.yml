@@ -60,5 +60,5 @@ jobs:
           TF_VAR.service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
           TF_VAR_key_vault_name: v2train
           TF_VAR_servicebus_namespace_name: v2train
-          TF_VAR_cosmosdb_account_name: v2train
+          # TF_VAR_cosmosdb_account_name: v2train
           TF_VAR.admin_username: github         
