@@ -72,11 +72,7 @@ resource "azurerm_servicebus_namespace" "sb" {
   name = var.servicebus_namespace_name 
   resource_group_name = azurerm_resource_group.rg.name 
   location = azurerm_resource_group.rg.location 
-  sku = "Standard" 
-  
-  depends_on = [ 
-    azurerm_container_registry.acr
-  ] 
+  sku = "Standard"     
 }
 
 resource "azurerm_cosmosdb_account" "cosmosdb" {
@@ -216,10 +212,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   depends_on = [ 
-    azurerm_container_registry.acr,
-    azurerm_servicebus_namespace.sb,
-    azurerm_key_vault.kv,
-    azurerm_cosmosdb_account.cosmosdb
+    azurerm_container_registry.acr   
   ]
 }
 
@@ -229,10 +222,7 @@ resource "azurerm_role_assignment" "acr_pull" {
   principal_id = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id 
 
   depends_on = [ 
-    azurerm_container_registry.acr,
-    azurerm_servicebus_namespace.sb,
-    azurerm_key_vault.kv,
-    azurerm_cosmosdb_account.cosmosdb
+    azurerm_container_registry.acr  
   ]   
 }
 
