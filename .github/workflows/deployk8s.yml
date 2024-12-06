@@ -47,7 +47,7 @@ jobs:
         run: terraform apply -input=false plan.out 
         env: 
           TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
-          TF_VAR_resource_group_name: myResourceGroup 
+          TF_VAR_resource_group_name: v2train
           TF_VAR_location: eastus 
           TF_VAR_cluster_name: v2train
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
