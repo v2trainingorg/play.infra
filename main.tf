@@ -10,6 +10,11 @@ variable "existing_acr_rg" {
   description = "The resource group of the existing Azure Container Registry" 
 }
 
+variable "resource_group_name" { 
+  type = string 
+  description = "The name of the application and resource group" 
+} 
+
 variable "appname" { 
   type = string 
   description = "The name of the application and resource group" 
@@ -49,7 +54,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.appname
+  name     = var.resource_group_name
   location = var.location
 }
 
