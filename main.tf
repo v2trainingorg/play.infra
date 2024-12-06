@@ -81,39 +81,39 @@ resource "azurerm_servicebus_namespace" "sb" {
   sku = "Standard"     
 }
 
-resource "azurerm_cosmosdb_account" "cosmosdb" {
-  name                = var.cosmosdb_account_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  offer_type          = "Standard"
-  kind                = "MongoDB"
+# resource "azurerm_cosmosdb_account" "cosmosdb" {
+#   name                = var.cosmosdb_account_name
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   offer_type          = "Standard"
+#   kind                = "MongoDB"
 
-  consistency_policy {
-    consistency_level = "Session"
-  }
+#   consistency_policy {
+#     consistency_level = "Session"
+#   }
 
-  geo_location {
-    location          = azurerm_resource_group.rg.location
-    failover_priority = 0
-  }
+#   geo_location {
+#     location          = azurerm_resource_group.rg.location
+#     failover_priority = 0
+#   }
 
-  free_tier_enabled = true
-}
+#   free_tier_enabled = true
+# }
 
-resource "azurerm_cosmosdb_mongo_database" "mongodb" {
-  name                = "${var.cosmosdb_account_name}-db"
-  resource_group_name = azurerm_resource_group.rg.name
-  account_name        = azurerm_cosmosdb_account.cosmosdb.name
-}
+# resource "azurerm_cosmosdb_mongo_database" "mongodb" {
+#   name                = "${var.cosmosdb_account_name}-db"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   account_name        = azurerm_cosmosdb_account.cosmosdb.name
+# }
 
-resource "azurerm_cosmosdb_mongo_collection" "mongo_collection" {
-  name                = "mycollection"
-  resource_group_name = azurerm_resource_group.rg.name
-  account_name        = azurerm_cosmosdb_account.cosmosdb.name
-  database_name       = azurerm_cosmosdb_mongo_database.mongodb.name
+# resource "azurerm_cosmosdb_mongo_collection" "mongo_collection" {
+#   name                = "mycollection"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   account_name        = azurerm_cosmosdb_account.cosmosdb.name
+#   database_name       = azurerm_cosmosdb_mongo_database.mongodb.name
 
-  default_ttl_seconds = -1
-}
+#   default_ttl_seconds = -1
+# }
 
 
 

@@ -28,10 +28,8 @@ jobs:
             # TenantId of the Azure Service principal created.
             tenant-id: ${{secrets.TENANT_ID}}
             # Azure subscriptionId
-            subscription-id: ${{secrets.SUBSCRIPTION_ID}}
-    
-      - name: Set TF_LOG environment variable
-        run: echo "TF_LOG=DEBUG > $GITHUB_ENV"
+            subscription-id: ${{secrets.SUBSCRIPTION_ID}}   
+ 
 
       - name: Terraform Init 
         run: |            
