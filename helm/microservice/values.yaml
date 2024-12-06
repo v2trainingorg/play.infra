@@ -1,6 +1,6 @@
 envVariables:
   ServiceSettings__MessageBroker: SERVICEBUS
-  ServiceSettings__KeyVaultName: playeconomy
+  ServiceSettings__KeyVaultName: v2train
 
 resources:
   limits:
