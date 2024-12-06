@@ -34,8 +34,7 @@ jobs:
         run: echo "TF_LOG=DEBUG >> $GITHUB_ENV"
 
       - name: Terraform Init 
-        run: |
-            cd TF
+        run: |            
             terraform init \
             -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT }}" \
             -backend-config="container_name=tfstate" \
@@ -43,13 +42,11 @@ jobs:
             -backend-config="access_key=${{ secrets.REMOTE_STORAGE_KEY }}"
               
       - name: Terraform Plan 
-        run: |
-            cd TF
+        run: |            
             terraform plan -out=plan.out 
               
       - name: Terraform Apply 
-        run: |
-            cd TF
+        run: |            
             terraform apply -input=false plan.out 
         env: 
           TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
@@ -60,5 +57,5 @@ jobs:
           TF_VAR.service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
           TF_VAR_key_vault_name: v2train
           TF_VAR_servicebus_namespace_name: v2train
-          # TF_VAR_cosmosdb_account_name: v2train
+          TF_VAR_cosmosdb_account_name: v2train
           TF_VAR.admin_username: github         
