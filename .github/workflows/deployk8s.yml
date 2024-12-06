@@ -36,7 +36,7 @@ jobs:
         run: |
             terraform init \
             -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT }}" \
-            -backend-config="container_name=terraform-state" \
+            -backend-config="container_name=tfstate" \
             -backend-config="key=terraform.tfstate" \
             -backend-config="access_key=${{ secrets.REMOTE_STORAGE_KEY }}"
               
