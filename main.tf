@@ -6,14 +6,14 @@ variable "existing_acr_name" {
 
 variable "existing_acr_rg" { 
   type = string
-  default = "v2train" 
+  default = "v2Train" 
   description = "The resource group of the existing Azure Container Registry" 
 }
 
 variable "appname" { 
   type = string 
   description = "The name of the application and resource group" 
-  default = "v2train"
+  default = "v2Train"
 } 
 
 variable "location" { 
