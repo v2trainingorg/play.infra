@@ -9,6 +9,12 @@ variable "appname" {
   default = "v2Train"
 } 
 
+variable "admin_username" {
+  type        = string
+  description = "The admin username for the Linux profile"
+  default     = "azuser"
+}
+
 variable "location" { 
   type = string   
   description = "The Azure location to deploy resources" 
@@ -105,12 +111,6 @@ resource "azurerm_cosmosdb_mongo_collection" "mongo_collection" {
   resource_group_name = azurerm_resource_group.rg.name
   account_name        = azurerm_cosmosdb_account.cosmosdb.name
   database_name       = azurerm_cosmosdb_mongo_database.mongodb.name
-
-  resource {
-    autoscale_settings {
-      max_throughput = 4000
-    }
-  }
 
   default_ttl_seconds = -1
 }
