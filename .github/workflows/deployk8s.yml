@@ -4,9 +4,7 @@ on:
     push: 
         branches: 
           - main 
-jobs: 
-
- 
+jobs:  
     
   deploy: 
     runs-on: ubuntu-latest 
@@ -34,6 +32,7 @@ jobs:
     
       - name: Terraform Init 
         run: |
+            cd TF
             terraform init \
             -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT }}" \
             -backend-config="container_name=tfstate" \
@@ -41,10 +40,14 @@ jobs:
             -backend-config="access_key=${{ secrets.REMOTE_STORAGE_KEY }}"
               
       - name: Terraform Plan 
-        run: terraform plan -out=plan.out 
+        run: |
+            cd TF
+            terraform plan -out=plan.out 
               
       - name: Terraform Apply 
-        run: terraform apply -input=false plan.out 
+        run: |
+            cd TF
+            terraform apply -input=false plan.out 
         env: 
           TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
           TF_VAR_resource_group_name: v2train
@@ -52,4 +55,7 @@ jobs:
           TF_VAR_cluster_name: v2train
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
           TF_VAR.service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
+          TF_VAR_key_vault_name: v2train
+          TF_VAR_servicebus_namespace_name: v2train
+          TF_VAR_cosmosdb_account_name: v2train
           TF_VAR.admin_username: github
