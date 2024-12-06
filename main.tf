@@ -76,8 +76,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }    
 
   azure_policy_enabled = true
-  enable_oidc_issuer = true
-  enable_workload_identity = true
+  oidc_issuer_enabled = true
+  workload_identity_enabled = true
 }
 
 resource "azurerm_role_assignment" "acr_pull" { 
