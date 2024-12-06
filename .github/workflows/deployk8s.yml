@@ -31,7 +31,7 @@ jobs:
             subscription-id: ${{secrets.SUBSCRIPTION_ID}}
     
       - name: Set TF_LOG environment variable
-        run: echo "TF_LOG=DEBUG >> $GITHUB_ENV"
+        run: echo "TF_LOG=DEBUG > $GITHUB_ENV"
 
       - name: Terraform Init 
         run: |            
@@ -44,7 +44,18 @@ jobs:
       - name: Terraform Plan 
         run: |            
             terraform plan -out=plan.out 
-              
+        env: 
+          TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
+          TF_VAR_resource_group_name: v2train
+          TF_VAR_location: eastus 
+          TF_VAR_cluster_name: v2train
+          TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
+          TF_VAR.service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
+          TF_VAR_key_vault_name: v2train
+          TF_VAR_servicebus_namespace_name: v2train
+          TF_VAR_cosmosdb_account_name: v2train
+          TF_VAR.admin_username: github         
+
       - name: Terraform Apply 
         run: |            
             terraform apply -input=false plan.out 
