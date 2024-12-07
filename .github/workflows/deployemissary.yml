@@ -37,6 +37,9 @@ jobs:
         run: |
           mkdir -p ~/.helm/repository
           touch ~/.helm/repository/repositories.yaml
+
+      - name: Remove Existing Helm Repo 
+        run: helm repo remove datawire || echo "Repo not found, continuing"
     
       - name: Add Helm repo
         run: |
