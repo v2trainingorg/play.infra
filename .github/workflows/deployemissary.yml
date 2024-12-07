@@ -31,55 +31,23 @@ jobs:
             subscription-id: ${{secrets.SUBSCRIPTION_ID}}  
 
       - name: Set AKS context
-        run: az aks get-credentials --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.APP_NAME }}
+        run: az aks get-credentials --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.APP_NAME }}     
 
-      - name: Initialize Helm
+      - name: Create namespace 
         run: |
-          helm init --stable-repo-url https://charts.helm.sh/stable          
-    
-      - name: Ensure Helm config directory
-        run: |
-          mkdir -p ~/.helm/repository/cache
-          mkdir -p ~/.helm/repository/local
-          touch ~/.helm/repository/repositories.yaml
-          echo "apiVersion: v1" > ~/.helm/repository/repositories.yaml
-          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.helm/repository/repositories.yaml
-          echo "repositories:" >> ~/.helm/repository/repositories.yaml
-
-      - name: Debug Helm config
-        run: |
-          echo "Helm repositories.yaml content:"
-          cat ~/.helm/repository/repositories.yaml
-       
-      - name: Remove existing helm repo 
-        run: helm repo remove datawire || echo "Repo not found, continuing"  
-            
-      - name: Add Helm repo
-        run: |
-          helm repo add datawire https://app.getambassador.io
-           
-      - name: Refresh Helm Repositories 
-        run: helm repo update
-
-      - name: Print Helm Repository Config 
-        run: cat ~/.helm/repository/repositories.yaml
+          kubectl create namespace emissary || echo "Namespace already exists"
 
       - name: Apply Emissary CRDs
         run: |
-          kubectl apply -f https://app.getambassador.io/yaml/emissary/3.3.0/emissary-crds.yaml
+          kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-crds.yaml
           kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
-
-      - name: Create namespace
-        run: |
-          kubectl create namespace emissary || echo "Namespace already exists"
+        
           
       - name: Install Emissary-ingress
         run: |
-          namespace="emissary"
-          appname="${{ secrets.APP_NAME }}"
-          helm install emissary-ingress datawire/emissary-ingress --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=$appname -n $namespace
-          kubectl rollout status deployment/emissary-ingress -n $namespace -w
-
+          kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-emissaryns.yaml
+          kubectl -n emissary wait --for condition=available --timeout=90s deploy -lproduct=aes
+          
       - name: Configure Emissary-ingress routing
         run: |
           namespace="emissary"
