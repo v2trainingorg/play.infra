@@ -40,7 +40,7 @@ jobs:
 
       - name: Init Helm
         run: | 
-          helm init —client-only
+          helm init 
 
       
       - name: Add Helm Repo 
