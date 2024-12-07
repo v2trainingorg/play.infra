@@ -35,10 +35,12 @@ jobs:
 
       - name: Ensure Helm config directory
         run: |
-          mkdir -p ~/.helm/repository
-          echo "apiVersion: v1" > ~/.helm/repository/repositories.yaml 
-          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.helm/repository/repositories.yaml 
-          echo "repositories:" >> ~/.helm/repository/repositories.yaml
+          mkdir -p ~/.config/helm/repository/cache
+          mkdir -p ~/.config/helm/repository/local
+          touch ~/.config/helm/repository/repositories.yaml
+          echo "apiVersion: v1" > ~/.config/helm/repository/repositories.yaml
+          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.config/helm/repository/repositories.yaml
+          echo "repositories:" >> ~/.config/helm/repository/repositories.yaml
 
       - name: Debug Helm config
         run: |
