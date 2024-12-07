@@ -46,13 +46,17 @@ jobs:
         run: |
           echo "Helm repositories.yaml content:"
           cat ~/.config/helm/repository/repositories.yaml
-     
-      - name: Clean Helm Config 
+       
+      - name: Remove existing helm repo 
         run: helm repo remove datawire || echo "Repo not found, continuing"  
-    
+        env:
+          HELM_HOME: ~/.config/helm
+          
       - name: Add Helm repo
         run: |
           helm repo add datawire https://app.getambassador.io
+        env:
+          HELM_HOME: ~/.config/helm
           
       - name: Refresh Helm Repositories 
         run: helm repo update
