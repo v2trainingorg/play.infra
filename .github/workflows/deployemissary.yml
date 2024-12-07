@@ -33,35 +33,30 @@ jobs:
       - name: Set AKS context
         run: az aks get-credentials --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.APP_NAME }}
 
+      - name: Initialize Helm
+        run: helm init --wait
+    
       - name: Ensure Helm config directory
         run: |
-          mkdir -p ~/.config/helm/repository/cache
-          mkdir -p ~/.config/helm/repository/local
-          touch ~/.config/helm/repository/repositories.yaml
-          echo "apiVersion: v1" > ~/.config/helm/repository/repositories.yaml
-          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.config/helm/repository/repositories.yaml
-          echo "repositories:" >> ~/.config/helm/repository/repositories.yaml
+          mkdir -p ~/.helm/repository/cache
+          mkdir -p ~/.helm/repository/local
+          touch ~/.helm/repository/repositories.yaml
+          echo "apiVersion: v1" > ~/.helm/repository/repositories.yaml
+          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.helm/repository/repositories.yaml
+          echo "repositories:" >> ~/.helm/repository/repositories.yaml
 
       - name: Debug Helm config
         run: |
           echo "Helm repositories.yaml content:"
-          cat ~/.config/helm/repository/repositories.yaml
+          cat ~/.helm/repository/repositories.yaml
        
       - name: Remove existing helm repo 
         run: helm repo remove datawire || echo "Repo not found, continuing"  
-        env:
-          HELM_HOME: ~/.config/helm
-          HELM_CONFIG_HOME: ~/.config/helm
-          HELM_CACHE_HOME: ~/.cache/helm
-          
+            
       - name: Add Helm repo
         run: |
           helm repo add datawire https://app.getambassador.io
-        env:
-          HELM_HOME: ~/.config/helm
-          HELM_CONFIG_HOME: ~/.config/helm
-          HELM_CACHE_HOME: ~/.cache/helm
-          
+           
       - name: Refresh Helm Repositories 
         run: helm repo update
 
