@@ -38,9 +38,9 @@ jobs:
           kubectl create namespace cert-manager || echo "Namespace already exists"
 
 
-      - name: Install Helm
+      - name: Init Helm
         run: | 
-          curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm.sh | bash
+          helm init —client-only
 
       
       - name: Add Helm Repo 
