@@ -40,6 +40,11 @@ jobs:
           echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.helm/repository/repositories.yaml 
           echo "repositories:" >> ~/.helm/repository/repositories.yaml
 
+      - name: Debug Helm config
+        run: |
+          echo "Helm repositories.yaml content:"
+          cat ~/.config/helm/repository/repositories.yaml
+     
       - name: Clean Helm Config 
         run: helm repo remove datawire || echo "Repo not found, continuing"  
     
