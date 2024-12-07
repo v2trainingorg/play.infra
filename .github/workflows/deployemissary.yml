@@ -36,15 +36,22 @@ jobs:
       - name: Ensure Helm config directory
         run: |
           mkdir -p ~/.helm/repository
-          touch ~/.helm/repository/repositories.yaml
+          echo "apiVersion: v1" > ~/.helm/repository/repositories.yaml 
+          echo "generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> ~/.helm/repository/repositories.yaml 
+          echo "repositories:" >> ~/.helm/repository/repositories.yaml
+
+      - name: Clean Helm Config 
+        run: helm repo remove datawire || echo "Repo not found, continuing"  
     
       - name: Add Helm repo
         run: |
           helm repo add datawire https://app.getambassador.io
-          helm install datawire/ambassador
-               
+          
       - name: Refresh Helm Repositories 
         run: helm repo update
+
+      - name: Print Helm Repository Config 
+        run: cat ~/.helm/repository/repositories.yaml
 
       - name: Apply Emissary CRDs
         run: |
