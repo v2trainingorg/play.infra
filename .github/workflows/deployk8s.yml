@@ -1,12 +1,10 @@
 name: Deploy Microservice Infrastructure
 
 on: 
-  ##push: 
-  ##  branches: 
-  ##    - main 
-  ##  paths-ignore:
-  ##    - '*.yml'
-  ##    - '*.yaml'
+  push: 
+    branches: 
+      - main 
+
   workflow_dispatch:
   
 jobs:  
