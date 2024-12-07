@@ -50,6 +50,7 @@ jobs:
       - name: Remove existing helm repo 
         run: helm repo remove datawire || echo "Repo not found, continuing"  
         env:
+          HELM_HOME: ~/.config/helm
           HELM_CONFIG_HOME: ~/.config/helm
           HELM_CACHE_HOME: ~/.cache/helm
           
@@ -57,6 +58,7 @@ jobs:
         run: |
           helm repo add datawire https://app.getambassador.io
         env:
+          HELM_HOME: ~/.config/helm
           HELM_CONFIG_HOME: ~/.config/helm
           HELM_CACHE_HOME: ~/.cache/helm
           
