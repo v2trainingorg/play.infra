@@ -37,6 +37,12 @@ jobs:
         run: |
           kubectl create namespace cert-manager || echo "Namespace already exists"
 
+
+      - name: Install Helm
+        run: | 
+          curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm.sh | bash
+
+      
       - name: Add Helm Repo 
         run: |
           helm repo add jetstack https://charts.jetstack.io
