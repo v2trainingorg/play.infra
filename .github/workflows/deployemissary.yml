@@ -69,11 +69,15 @@ jobs:
           kubectl apply -f https://app.getambassador.io/yaml/emissary/3.3.0/emissary-crds.yaml
           kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
 
+      - name: Create namespace
+        run: |
+          kubectl create namespace emissary || echo "Namespace already exists"
+          
       - name: Install Emissary-ingress
         run: |
           namespace="emissary"
           appname="${{ secrets.APP_NAME }}"
-          helm install emissary-ingress datawire/emissary-ingress --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=$appname -n $namespace --create-namespace
+          helm install emissary-ingress datawire/emissary-ingress --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=$appname -n $namespace
           kubectl rollout status deployment/emissary-ingress -n $namespace -w
 
       - name: Configure Emissary-ingress routing
