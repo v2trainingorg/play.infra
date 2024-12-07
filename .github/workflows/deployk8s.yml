@@ -1,4 +1,4 @@
-name: Deploy AKS Cluster 
+name: Deploy Microservice Infrastructure
 
 on: 
     push: 
