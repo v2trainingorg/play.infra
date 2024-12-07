@@ -34,7 +34,9 @@ jobs:
         run: az aks get-credentials --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.APP_NAME }}
 
       - name: Initialize Helm
-        run: helm init --wait
+        run: |
+          helm init 
+          kubectl -n kube-system rollout status deploy/tiller-deploy
     
       - name: Ensure Helm config directory
         run: |
