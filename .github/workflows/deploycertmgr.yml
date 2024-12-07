@@ -36,23 +36,12 @@ jobs:
       - name: Create namespace 
         run: |
           kubectl create namespace cert-manager || echo "Namespace already exists"
-
-
-      - name: Init Helm
-        run: | 
-          helm init 
-
-      
-      - name: Add Helm Repo 
-        run: |
-          helm repo add jetstack https://charts.jetstack.io
-          helm repo update
+ 
 
       - name: Install Cert-Manager
         run: |
-          namespace="cert-manager"
-          helm install cert-manager jetstack/cert-manager --version v1.16.2 --set crds.enabled=true --namespace $namespace
-
+          kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.16.2/cert-manager.yaml
+         
       - name: Create Cluster Issuer
         run: |
           namespace="cert-manager" 
