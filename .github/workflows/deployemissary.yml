@@ -33,6 +33,11 @@ jobs:
       - name: Set AKS context
         run: az aks get-credentials --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.APP_NAME }}
 
+      - name: Ensure Helm config directory
+        run: |
+          mkdir -p ~/.helm/repository
+          touch ~/.helm/repository/repositories.yaml
+    
       - name: Add Helm repo
         run: |
           helm repo add datawire https://app.getambassador.io
