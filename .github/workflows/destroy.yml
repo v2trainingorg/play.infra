@@ -1,0 +1,80 @@
+name: Destroy Microservice Infrastructure
+
+on: [workflow_dispatch]
+
+jobs:  
+    
+  destroy: 
+    runs-on: ubuntu-latest 
+
+    permissions: 
+      id-token: write 
+      contents: read
+      
+    steps: 
+      - name: Checkout code 
+        uses: actions/checkout@v2 
+             
+      - name: Set up Terraform 
+        uses: hashicorp/setup-terraform@v2 
+            
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+            # ClientId of the Azure Service principal created.
+            client-id: ${{secrets.SERVICE_PRINCIPAL_CLIENT_ID}}
+            # TenantId of the Azure Service principal created.
+            tenant-id: ${{secrets.TENANT_ID}}
+            # Azure subscriptionId
+            subscription-id: ${{secrets.SUBSCRIPTION_ID}}   
+ 
+      - name: Terraform Init 
+        run: |            
+            terraform init \
+            -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT }}" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="access_key=${{ secrets.REMOTE_STORAGE_KEY }}" 
+
+      - name: Plan Destroy 
+        run: |
+            terraform plan \
+            -destroy \
+            -out=tfplan \
+            -input=false 
+        env: 
+          TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
+          TF_VAR_resource_group_name: ${{ secrets.APP_NAME }}
+          TF_VAR_location: eastus 
+          TF_VAR_cluster_name: ${{ secrets.APP_NAME }}
+          TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
+          TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
+          TF_VAR_key_vault_name: ${{ secrets.APP_NAME }}
+          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}
+          TF_VAR_cosmosdb_account_name: ${{ secrets.APP_NAME }}
+          TF_VAR_admin_username: github
+      
+      - name: Apply Destroy 
+        run: |
+            terraform apply \
+            -input=false \
+            tfplan 
+        env: 
+          TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
+          TF_VAR_resource_group_name: ${{ secrets.APP_NAME }}
+          TF_VAR_location: eastus 
+          TF_VAR_cluster_name: ${{ secrets.APP_NAME }}
+          TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
+          TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
+          TF_VAR_key_vault_name: ${{ secrets.APP_NAME }}
+          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}
+          TF_VAR_cosmosdb_account_name: ${{ secrets.APP_NAME }}
+          TF_VAR_admin_username: github
+     
+      - name: Remove Terraform State 
+        run: |
+            az storage blob delete \
+            --container-name tfstate \
+            --name terraform.tfstate \
+            --account-name ${{ secrets.STORAGE_ACCOUNT }}
+      
