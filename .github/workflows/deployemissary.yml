@@ -35,8 +35,7 @@ jobs:
 
       - name: Initialize Helm
         run: |
-          helm init --stable-repo-url https://charts.helm.sh/stable
-          kubectl -n kube-system rollout status deploy/tiller-deploy
+          helm init --stable-repo-url https://charts.helm.sh/stable          
     
       - name: Ensure Helm config directory
         run: |
