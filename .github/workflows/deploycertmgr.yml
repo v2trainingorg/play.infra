@@ -48,15 +48,7 @@ jobs:
       - name: Wait for Cert-Manager Webhook to be ready 
         run: | 
           kubectl wait --namespace cert-manager --for=condition=available --timeout=300s deployment/cert-manager-webhook
-
-      - name: Install Ambassador CRDs 
-        run: | 
-          kubectl apply -f https://app.getambassador.io/yaml/edge-stack/3.2.2/aes-crds.yaml
-
-      - name: Install Ambassador 
-        run: | 
-          kubectl apply -f https://app.getambassador.io/yaml/edge-stack/3.2.2/aes.yaml kubectl -n ambassador wait --for condition=available deployment -l app.kubernetes.io/name=ambassador
-          
+               
       - name: Create Cluster Issuer
         run: |
           namespace="cert-manager" 
