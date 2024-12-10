@@ -56,6 +56,7 @@ jobs:
 
       - name: Create ACME Challenge
         run: |
+          namespace="cert-manager"
           kubectl apply -f ./cert-manager/acme-challenge.yaml -n $namespace
 
       - name: Create TLS Cert
