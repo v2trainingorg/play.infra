@@ -1,9 +1,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: playeconomy-tls-cert
+  name: v2train-tls-cert
 spec:
-  secretName: playeconomy-tls
+  secretName: v2train-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer

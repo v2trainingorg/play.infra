@@ -7,4 +7,4 @@ spec:
   acmeProvider:
     email: user@v2train.com
   tlsSecret:
-    name: playeconomy-tls
+    name: v2train-tls
