@@ -1,9 +1,9 @@
 apiVersion: getambassador.io/v3alpha1
 kind: Host
 metadata:
-  name: playeconomy-host
+  name: v2train-host
 spec:
-  hostname: playeconomy.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   acmeProvider:
     email: user@v2train.com
   tlsSecret:
