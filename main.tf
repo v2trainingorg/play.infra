@@ -6,7 +6,7 @@ variable "resource_group_name" {
 variable "appname" { 
   type = string 
   description = "The name of the application and resource group" 
-  default = "v2Train"
+  default = "v3Train"
 } 
 
 variable "admin_username" {
