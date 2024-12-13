@@ -3,7 +3,7 @@ name: Deploy Certificate-Infrastructure
 on: [workflow_dispatch]
 
 jobs:
-  install-emissary-ingress:
+  install-cert-manager:
     runs-on: ubuntu-latest
     
     permissions: 
