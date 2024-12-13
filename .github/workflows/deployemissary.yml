@@ -50,3 +50,4 @@ jobs:
           namespace="emissary"
           kubectl apply -f ./emissary-ingress/listener.yaml -n $namespace
           kubectl apply -f ./emissary-ingress/mappings.yaml -n $namespace
+          kubectl apply -f ./emissary-ingress/loadbalancer.yaml -n $namespace

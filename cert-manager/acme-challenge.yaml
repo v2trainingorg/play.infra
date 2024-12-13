@@ -15,7 +15,7 @@ kind: Mapping
 metadata:
   name: acme-challenge-mapping
 spec:
-  hostname: v2train.eastus.cloudapp.azure.com
+  hostname: v3train.eastus.cloudapp.azure.com
   prefix: /.well-known/acme-challenge/
   rewrite: ""
   service: acme-challenge-service
