@@ -66,7 +66,7 @@ jobs:
 
       - name: Enable TLS and HTTPS
         run: |
-          namespace="cert-manager"
+          namespace="emissary"
           kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n $namespace
           kubectl apply -f ./emissary-ingress/host.yaml -n $namespace
       
