@@ -59,11 +59,7 @@ jobs:
           namespace="cert-manager"
           kubectl apply -f ./cert-manager/acme-challenge.yaml -n $namespace
 
-      - name: Create TLS Cert
-        run: |
-          namespace="cert-manager"
-          kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n $namespace
-
+          
       - name: Enable TLS and HTTPS
         run: |
           namespace="emissary"
