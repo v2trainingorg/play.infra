@@ -34,16 +34,16 @@ jobs:
         run: |
           kubectl create namespace emissary || echo "Namespace already exists"
 
-      # - name: Apply Emissary CRDs
-      #   run: |
-      #     kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-crds.yaml
-      #     kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
+      - name: Apply Emissary CRDs
+        run: |
+          kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-crds.yaml
+          kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
         
           
-      # - name: Install Emissary-ingress
-      #   run: |
-      #     kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-emissaryns.yaml
-      #     kubectl -n emissary wait --for condition=available --timeout=90s deploy -lproduct=aes
+      - name: Install Emissary-ingress
+        run: |
+          kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-emissaryns.yaml
+          kubectl -n emissary wait --for condition=available --timeout=90s deploy -lproduct=aes
           
       - name: Configure Emissary-ingress routing
         run: |
