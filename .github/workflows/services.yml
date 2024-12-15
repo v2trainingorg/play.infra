@@ -51,11 +51,12 @@ jobs:
       - name: Configure Emissary-Ingress routing
         run: |
           namespace='emissary'
-          kubectl apply -f .\emissary-ingress\listener.yaml -n $namespace
-          kubectl apply -f .\emissary-ingress\mappings.yaml -n $namespace
+          kubectl apply -f ./emissary-ingress/listener.yaml -n $namespace
+          kubectl apply -f ./emissary-ingress/mappings.yaml -n $namespace
 
   install-certmanagr:
     runs-on: ubuntu-latest
+    needs: install-emissaryingress
     
     permissions:
       id-token: write
@@ -89,16 +90,15 @@ jobs:
       - name: Install Certificate Manager
         run: |
           helm repo add jetstack https://charts.jetstack.io --force-update
-          helm install \
-          cert-manager jetstack/cert-manager \
-          --namespace emissary \          
-          --version v1.16.2 \
-          --set crds.enabled=true
+          helm install cert-manager jetstack/cert-manager \
+            --namespace emissary \          
+            --version v1.16.2 \
+            --set crds.enabled=true
           
       - name: Create Issuer and TLS Certificate
         run: |
           namespace='emissary'
-          kubectl apply -f .\cert-manager\cluster-issuer.yaml -n $namespace
-          kubectl apply -f .\cert-manager\acme-challenge.yaml -n $namespace
-          kubectl apply -f .\emissary-ingress\tls-certificate.yaml -n $namespace
-          kubectl apply -f .\emissary-ingress\host.yaml -n $namespace
+          kubectl apply -f ./cert-manager/cluster-issuer.yaml -n $namespace
+          kubectl apply -f ./cert-manager/acme-challenge.yaml -n $namespace
+          kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n $namespace
+          kubectl apply -f ./emissary-ingress/host.yaml -n $namespace
