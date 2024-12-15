@@ -43,7 +43,7 @@ jobs:
           kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-crds.yaml
           kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
           helm install emissary-ingress \
-          --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=${{secrets.appname}} \
+          --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=${{ secrets.APP_NAME }} \
           --namespace emissary datawire/emissary-ingress 
           kubectl -n emissary wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary-ingress
 
