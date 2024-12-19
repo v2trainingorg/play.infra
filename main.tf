@@ -29,10 +29,6 @@ variable "key_vault_name" {
   type = string 
 }
 
-variable "cosmosdb_account_name" { 
-  description = "The name of the Cosmos DB account." 
-  type = string 
-}
 
 variable "node_vm_size" { 
   type = string 

@@ -50,8 +50,7 @@ jobs:
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
           TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
           TF_VAR_key_vault_name: ${{ secrets.APP_NAME }}
-          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}
-          TF_VAR_cosmosdb_account_name: ${{ secrets.APP_NAME }}
+          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}          
           TF_VAR_admin_username: github
       
       - name: Apply Destroy 
@@ -67,8 +66,7 @@ jobs:
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
           TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
           TF_VAR_key_vault_name: ${{ secrets.APP_NAME }}
-          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}
-          TF_VAR_cosmosdb_account_name: ${{ secrets.APP_NAME }}
+          TF_VAR_servicebus_namespace_name: ${{ secrets.APP_NAME }}          
           TF_VAR_admin_username: github
      
       - name: Remove Terraform State 
