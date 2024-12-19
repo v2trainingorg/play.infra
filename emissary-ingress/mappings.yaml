@@ -3,7 +3,7 @@ kind: Mapping
 metadata:
   name: identity-mapping
 spec:
-  hostname: v3train.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   prefix: /identity-svc/
   service: identity-service.identity
 
@@ -13,7 +13,7 @@ kind: Mapping
 metadata:
   name: catalog-mapping
 spec:
-  hostname: v3train.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   prefix: /catalog-svc/
   service: catalog-service.catalog
 
@@ -23,7 +23,7 @@ kind: Mapping
 metadata:
   name: inventory-mapping
 spec:
-  hostname: v3train.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   prefix: /inventory-svc/
   service: inventory-service.inventory
 
@@ -33,7 +33,7 @@ kind: Mapping
 metadata:
   name: trading-mapping
 spec:
-  hostname: v3train.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   prefix: /trading-svc/
   service: trading-service.trading
   allow_upgrade:
@@ -45,6 +45,6 @@ kind: Mapping
 metadata:
   name: frontend-mapping
 spec:
-  hostname: v3train.eastus.cloudapp.azure.com
+  hostname: v2train.eastus.cloudapp.azure.com
   prefix: /
   service: frontend-client.frontend

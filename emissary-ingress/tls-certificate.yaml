@@ -1,11 +1,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: v3train-tls-cert
+  name: v2train-tls-cert
 spec:
-  secretName: v3train-tls
+  secretName: v2train-tls
   issuerRef:
     name: letsencrypt-prod    
     kind: ClusterIssuer
   dnsNames:
-    - "v3train.eastus.cloudapp.azure.com"
+    - "v2train.eastus.cloudapp.azure.com"
