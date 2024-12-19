@@ -8,6 +8,8 @@ variable "appname" {
   description = "The name of the application and resource group"  
 } 
 
+
+
 variable "admin_username" {
   type        = string
   description = "The admin username for the Linux profile"

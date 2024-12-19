@@ -46,6 +46,7 @@ jobs:
           TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
           TF_VAR_resource_group_name: ${{ secrets.APP_NAME }}
           TF_VAR_location: eastus 
+          TF_VAR_appname: ${{ secrets.APP_NAME }}
           TF_VAR_cluster_name: ${{ secrets.APP_NAME }}
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
           TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
@@ -62,6 +63,7 @@ jobs:
           TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }} 
           TF_VAR_resource_group_name: ${{ secrets.APP_NAME }}
           TF_VAR_location: eastus 
+          TF_VAR_appname: ${{ secrets.APP_NAME }}
           TF_VAR_cluster_name: ${{ secrets.APP_NAME }}
           TF_VAR_service_principal_client_id: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_ID }} 
           TF_VAR_service_principal_client_secret: ${{ secrets.SERVICE_PRINCIPAL_CLIENT_SECRET }} 
